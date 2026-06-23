@@ -1,0 +1,46 @@
+# Persona Spec — TEMPLATE
+# Copy this file to specs/<your-persona>.yaml and fill every required section.
+# Run `python scripts/validate_spec.py` to check it conforms to the schema.
+
+identity:
+  name: ""              # e.g. "Support Reply Drafter"
+  role: ""              # e.g. "customer support reply drafter"
+  description: ""        # one or two sentences
+
+tone_and_voice:
+  - ""                  # concrete, testable rule
+  - ""                  # e.g. "answers in <= 3 short paragraphs"
+
+capabilities:
+  - ""                  # what it should do
+  - ""
+
+constraints:
+  - ""                  # hard must-not
+  - ""
+
+failure_modes:
+  - taxonomy_id: ""     # id from the AI Failure Mode Taxonomy repo
+    why_it_applies: ""
+    watch_for: ""
+
+eval_criteria:
+  - name: ""
+    criteria: ""        # what "good" looks like
+    how_measured: ""    # "deterministic" or "judged 1-5"
+
+example_interactions:
+  - label: "good"
+    user: ""
+    assistant: ""
+    note: ""
+  - label: "bad"
+    user: ""
+    assistant: ""
+    note: ""             # why this is bad
+
+metadata:
+  owner: ""
+  version: "0.1"
+  last_updated: ""
+  linked_prompt: ""

@@ -1,0 +1,84 @@
+# Persona / Prompt Spec — Schema Definition
+#
+# A persona spec defines how an AI feature should behave BEFORE the prompt is
+# written. It is the source of truth a PM owns: engineers write the prompt from
+# it, QA tests against it, and disagreements get resolved on the spec instead of
+# discovered after launch.
+#
+# Every spec in /specs must conform to this schema. The validator
+# (scripts/validate_spec.py) checks required sections are present and non-empty.
+#
+# Cross-references to sibling repos:
+#   - failure_modes[].taxonomy_id  -> ids from the AI Failure Mode Taxonomy repo
+#   - eval_criteria                -> feeds test cases in the Prompt Regression Suite repo
+
+schema:
+  identity:
+    required: true
+    fields:
+      name: Human-readable persona name.
+      role: What this persona is (e.g. "customer support reply drafter").
+      description: One- or two-sentence summary of who it is and what it's for.
+
+  tone_and_voice:
+    required: true
+    type: list
+    description: >
+      Concrete, TESTABLE voice rules. Not "be friendly" but rules you could
+      check: "answers in <= 3 sentences", "apologizes at most once",
+      "never mirrors slang or profanity".
+
+  capabilities:
+    required: true
+    type: list
+    description: What this persona should do — its core jobs and scope of help.
+
+  constraints:
+    required: true
+    type: list
+    description: >
+      Hard must-nots and boundaries: "never promises refunds for change-of-mind",
+      "never gives medical dosages", "never invents order details not in context".
+
+  failure_modes:
+    required: true
+    type: list
+    description: >
+      How this persona specifically tends to break, and what to watch for.
+    item_fields:
+      taxonomy_id: >
+        id from the AI Failure Mode Taxonomy repo (e.g. persona-drift,
+        sycophancy, over-refusal). Links the risk to its full catalog entry.
+      why_it_applies: Why this failure is a live risk for THIS persona.
+      watch_for: The observable symptom to monitor.
+
+  eval_criteria:
+    required: true
+    type: list
+    description: >
+      How you'll measure whether the persona is behaving. Each criterion should
+      be specific enough to become a test case in the Prompt Regression Suite.
+    item_fields:
+      name: Short name of the quality (e.g. empathetic_tone).
+      criteria: What "good" looks like, in one sentence.
+      how_measured: deterministic check or judged score (1-5).
+
+  example_interactions:
+    required: true
+    type: list
+    description: >
+      Concrete sample exchanges. Include at least one GOOD and one BAD example;
+      for bad ones, say why they're bad. Makes the spec testable, not abstract.
+    item_fields:
+      label: good | bad
+      user: The user's message.
+      assistant: The persona's reply.
+      note: For bad examples, what's wrong with it.
+
+  metadata:
+    required: false
+    fields:
+      owner: Who owns this spec.
+      version: Spec version.
+      last_updated: Date.
+      linked_prompt: Path/URL of the prompt implementing this spec.
