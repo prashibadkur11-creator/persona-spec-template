@@ -1,4 +1,5 @@
 # Persona / Prompt Spec Template
+![License: MIT](https://img.shields.io/github/license/prashibadkur11-creator/persona-spec-template) ![CI](https://img.shields.io/github/actions/workflow/status/prashibadkur11-creator/persona-spec-template/spec-ci.yml?branch=main&label=CI)
 
 A structured, forkable format for defining **how an AI feature should behave —
 before the prompt is written.** Think of it as a PRD for AI behavior: the source
